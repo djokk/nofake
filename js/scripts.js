@@ -8,7 +8,7 @@ myElement.style.width = `${document.body.clientWidth}px`;
 myElement.style.height = `${document.body.clientHeight}px`;
 
 function getRandomVelocity() {
-  return (Math.random() - 0.5) * 3; // Случайное значение скорости движения элемента (-3 до 3)
+  return (Math.random() - 2) * 3; // Случайное значение скорости движения элемента (-3 до 3)
 }
 
 function getRandomDirection() {
@@ -17,12 +17,12 @@ function getRandomDirection() {
 
 function moveElement(element) {
   // Получаем текущие координаты элемента
-  let x = parseFloat(element.style.left) || Math.random() * (window.innerWidth - 30);
-  let y = parseFloat(element.style.top) || Math.random() * (window.innerHeight - 30);
+  let x = parseFloat(element.style.left) || Math.random() * (document.body.clientWidth - 425);
+  let y = parseFloat(element.style.top) || Math.random() * (document.body.clientHeight - 425);
 
   // Получаем размеры окна браузера
-  const maxX = window.innerWidth - 30; // Максимальная координата по X (ширина окна минус ширина элемента)
-  const maxY = window.innerHeight - 30; // Максимальная координата по Y (высота окна минус высота элемента)
+  const maxX = document.body.clientWidth - 425; // Максимальная координата по X (ширина окна минус ширина элемента)
+  const maxY = document.body.clientHeight - 425; // Максимальная координата по Y (высота окна минус высота элемента)
 
   // Получаем текущую скорость и направление движения элемента
   let velocityX = parseFloat(element.getAttribute('data-velocity-x')) || getRandomVelocity();
@@ -35,11 +35,11 @@ function moveElement(element) {
   y += velocityY * directionY;
 
   // Отталкиваем элемент от стен с учетом ограничений (-200px)
-  if (x <= -15 || x >= maxX + 15) {
+  if (x <= -200 || x >= maxX + 200) {
     directionX = -directionX; // Изменяем направление движения в противоположную сторону при столкновении со стеной
   }
 
-  if (y <= -15 || y >= maxY + 15) {
+  if (y <= -200 || y >= maxY + 200) {
     directionY = -directionY; // Изменяем направление движения в противоположную сторону при столкновении со стеной
   }
 
