@@ -51,3 +51,98 @@ const elements = document.querySelectorAll('.moving-element');
 
 // Запуск анимации для каждого элемента
 elements.forEach(moveElement);
+
+
+// Получаем ссылки на элементы абзаца и кнопки
+const styleButton = document.getElementById("navbar-toggler");
+const paragraph = document.getElementById("navbar-collapse");
+const elements2 = document.querySelector(".fa");
+const body = document.querySelector(".body");
+
+// Добавляем обработчик события для кнопки
+styleButton.addEventListener("click", function () {
+  // console.log('asdasd');
+  if (elements2.classList.contains('fa-bars')) {
+    elements2.classList.remove('fa-bars');
+    elements2.classList.add('fa-times');
+    paragraph.style.display = "block";
+    body.style.overflow = "hidden";
+  } else {
+    elements2.classList.remove('fa-times');
+    elements2.classList.add('fa-bars');
+    paragraph.style.display = "none";
+    body.style.overflow = "";
+  }
+});
+
+let cart = document.querySelectorAll('.scrollDown');
+
+for(let i=0; i < cart.length; i++) {
+  cart[i].addEventListener("click", function () {
+    // console.log('asdasd');
+    if (elements2.classList.contains('fa-bars')) {
+      elements2.classList.remove('fa-bars');
+      elements2.classList.add('fa-times');
+      paragraph.style.display = "block";
+      body.style.overflow = "hidden";
+    } else {
+      elements2.classList.remove('fa-times');
+      elements2.classList.add('fa-bars');
+      paragraph.style.display = "none";
+      body.style.overflow = "";
+    }
+  });
+}
+
+let dteNow = new Date();
+let intYear = dteNow.getFullYear();
+
+// Получаем ссылку на элемент с идентификатором "copyright"
+let copyrightElement = document.getElementById('copyright');
+
+if (copyrightElement) {
+  // Получаем текстовое содержимое элемента
+  let text = copyrightElement.textContent;
+
+  // Заменяем "CurrentCopyrightYear" на значение переменной intYear
+  text = text.replace('CurrentCopyrightYear', intYear);
+
+  // Устанавливаем обновленный текст обратно в элемент
+  copyrightElement.textContent = text;
+}
+
+document.querySelectorAll('form').forEach(function(form) {
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Отмена стандартной отправки формы
+    // Получение ID формы
+    var formID = form.getAttribute('id');
+    // Добавление решётки к имени ID
+    var formNm = document.getElementById(formID);
+    var formData = new FormData(formNm);
+
+    // Создание объекта XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Настройка запроса
+    xhr.open('POST', 'telegram.php', true);
+
+    // Обработка успешного ответа
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        // Вывод текста результата отправки
+        formNm.innerHTML = xhr.responseText;
+      } else {
+        // Вывод текста ошибки отправки
+        formNm.innerHTML = 'Ошибка: ' + xhr.status;
+      }
+    };
+
+    // Обработка ошибки запроса
+    xhr.onerror = function() {
+      formNm.innerHTML = 'Произошла ошибка при отправке запроса.';
+    };
+
+    // Отправка данных формы
+    xhr.send(formData);
+  });
+});
